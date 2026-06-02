@@ -39,6 +39,7 @@ def init_db() -> None:
             """
         )
 
+# //authentication and user management functions
 
 def get_user(username: str) -> sqlite3.Row:
     conn = _get_connection()
@@ -67,7 +68,7 @@ def get_or_create_user(username: str) -> sqlite3.Row:
     
     return user
 
-
+# //exercise management functions
 def add_exercise(user_id, exercise_name, reps, sets, time):
     conn = _get_connection()
 

@@ -174,7 +174,7 @@ def main():
 
     if st.session_state.get("audio_to_play"):
         autoplay_audio(st.session_state.audio_to_play)
-        st.session_state.audio_to_play = None       # ← clear after playing
+        st.session_state.audio_to_play = None
 
     if st.session_state.get("coach_feedback"):
         st.markdown("")
@@ -208,22 +208,31 @@ def main():
             video_processor_factory=VideoProcessorClass,
             rtc_configuration={
                 "iceServers": [
-                    {"urls": ["stun:stun.l.google.com:19302"]},
-                    {"urls": ["stun:stun1.l.google.com:19302"]},
+                    {"urls": "stun:stun.relay.metered.ca:80"},
                     {
-                        "urls": ["turn:openrelay.metered.ca:80"],
-                        "username": "openrelayproject",
-                        "credential": "openrelayproject",
+                        "urls": "turn:global.relay.metered.ca:80",
+                        "username": "dce1513839bfcd1563bdd008",
+                        "credential": "gni5MCTtY1xDz0Ux",
                     },
                     {
-                        "urls": ["turn:openrelay.metered.ca:443"],
-                        "username": "openrelayproject",
-                        "credential": "openrelayproject",
+                        "urls": "turn:global.relay.metered.ca:80?transport=tcp",
+                        "username": "dce1513839bfcd1563bdd008",
+                        "credential": "gni5MCTtY1xDz0Ux",
+                    },
+                    {
+                        "urls": "turn:global.relay.metered.ca:443",
+                        "username": "dce1513839bfcd1563bdd008",
+                        "credential": "gni5MCTtY1xDz0Ux",
+                    },
+                    {
+                        "urls": "turns:global.relay.metered.ca:443?transport=tcp",
+                        "username": "dce1513839bfcd1563bdd008",
+                        "credential": "gni5MCTtY1xDz0Ux",
                     },
                 ]
             },
             media_stream_constraints={"video": True, "audio": False},
-            async_processing=True
+            async_processing=True,
         )
 
         sync_metrics_update(context)
@@ -259,7 +268,7 @@ def main():
         if not df.empty:
             df["Date"] = pd.to_datetime(df["Date"]).dt.strftime("%Y-%m-%d %H:%M")
             df.index += 1
-            st.table(df)      # ← no groupby, each session its own row
+            st.table(df)
         else:
             st.info("No workout history found.")
 

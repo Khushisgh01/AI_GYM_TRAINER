@@ -85,10 +85,20 @@ class VoicePipeline:
         return voice, text
     
 
+# def autoplay_audio(audio_bytes):
+#     if not audio_bytes:
+#         return
+    
+#     st.markdown("<style>[data-testid='stAudio'] {display: none;}</style>", unsafe_allow_html=True)
+    
+#     st.audio(audio_bytes, format="audio/mp3", autoplay=True)
 def autoplay_audio(audio_bytes):
     if not audio_bytes:
         return
-    
-    st.markdown("<style>[data-testid='stAudio'] {display: none;}</style>", unsafe_allow_html=True)
-    
-    st.audio(audio_bytes, format="audio/mp3", autoplay=True)
+    import base64
+    b64 = base64.b64encode(audio_bytes).decode()
+    st.markdown(f"""
+        <audio autoplay style="display:none">
+            <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+        </audio>
+    """, unsafe_allow_html=True)

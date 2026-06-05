@@ -259,7 +259,7 @@ def main():
         if not df.empty:
             df["Date"] = pd.to_datetime(df["Date"]).dt.strftime("%Y-%m-%d %H:%M")
             df.index += 1
-            st.table(df, border="horizontal")      # ← no groupby, each session its own row
+            st.table(df)      # ← no groupby, each session its own row
         else:
             st.info("No workout history found.")
 
